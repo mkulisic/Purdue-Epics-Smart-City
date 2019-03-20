@@ -3,7 +3,7 @@ var image = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxISEBAP
 
 var database = firebase.database();
 var listReports = "did not update";
-console.log('hellooo')
+console.log('helooooooooooooooooooooo')
 console.log(database);
 removeReport("-LOsKCzLPInoj9fBx25v")
 
