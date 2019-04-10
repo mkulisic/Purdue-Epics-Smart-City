@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"></link>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous"></link>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"></link>
+  <link rel="stylesheet" href="smart_city/public/css/smart_city.css"></link>
+  <script src="https://www.gstatic.com/firebasejs/5.5.3/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.5.3/firebase-database.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJrhwlTG-VkMQh1H6x3YXAT7HnQjJXMgk"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+  <script src="./smart_city/public/js/fire.js"></script>
+  
+  <style>
+    body {font-family: Arial, Helvetica, sans-serif;}
+
+    #myImg {
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    #myImg:hover {
+      opacity: 0.7;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      padding-top: 100px;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgb(0,0,0);
+      background-color: rgba(0,0,0,0.9);
+    }
+
+    .modal-content {
+      margin: auto;
+      display: block;
+      width: 80%;
+      max-width: 700px;
+      height:80%;
+      max-height: 500px;
+    }
+
+    #caption {
+      margin: auto;
+      display: block;
+      width: 80%;
+      max-width: 700px;
+      text-align: center;
+      color: #ccc;
+      padding: 10px 0;
+      height: 150px;
+    }
+
+    .modal-content, #caption {  
+      -webkit-animation-name: zoom;
+      -webkit-animation-duration: 0.6s;
+      animation-name: zoom;
+      animation-duration: 0.6s;
+    }
+
+    @-webkit-keyframes zoom {
+      from {-webkit-transform:scale(0)} 
+      to {-webkit-transform:scale(1)}
+    }
+
+    @keyframes zoom {
+      from {transform:scale(0)} 
+      to {transform:scale(1)}
+    }
+
+    .close {
+      position: absolute;
+      top: 15px;
+      right: 35px;
+      color: #f1f1f1;
+      font-size: 40px;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .close:hover {
+      color: #bbb;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .close:focus {
+      color: #bbb;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    @media only screen and (max-width: 700px){
+      .modal-content {
+        width: 100%;
+      }
+    }
+  </style>
+  
+  <title>Smart City</title>
+</head>
+<body>
+  <style>
+    thead {
+      font-weight: bold;
+      background-color: #879ab7;
+    }
+  </style>
+  
+  <div class="jumbotron jumbotron-fluid" style="background-color:#CFB53B">
+    <div class="row">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-8">
+        <h1 class="h1">West Lafayette <i class="fa fa-map" aria-hidden="true"></i> Smart City</h1>
+      </div>
+      <div class="container">
+        <div class="row" width=100%>
+          <div class="col-sm-1"></div>
+          <div class="col-sm-2">
+            <select class="custom-select" id="status" onchange="checkDropdown()">
+              <option value="all">All Statuses</option>
+              <option value="Submitted">Submitted</option>
+              <option value="Pending Action">Pending Action</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Resolved">Resolved</option>
+            </select>
+          </div>
+          <div class="col-sm-2">
+            <select class="custom-select" id="type" onchange="checkDropdown()">
+              <option value="all">All Types</option>
+              <option value="Pothole">Pothole</option>
+              <option value="Traffic">Traffic</option>
+              <option value="Tripping Hazard">Tripping Hazard</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="col-sm-2">
+            <select class="custom-select" id="street_select" onchange="checkDropdown()">
+              <option value="all">All Streets</option>
+            </select>
+          </div>
+          <div class="col-sm-2">
+            <select class="custom-select" id="from_date" onchange="checkDropdown()">
+              <option value="all">From Date</option>
+            </select>
+          </div>
+          <div class="col-sm-2">
+            <select class="custom-select" id="to_date" onchange="checkDropdown()">
+              <option value="all">To Date</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+	
+  <div id="map"></div>
+  
+  <h2><center><font color="#34738f">Reports</font></center></h2>
+  
+  <div class="modal" id="myModal">
+    <span class="close">&times;</span>
+    <img class="modal-content" id="img01"></img>
+    <div id="caption"></div>
+  </div>
+  
+  <script>initWebsite()</script>
+</body>
+</html>
