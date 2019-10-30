@@ -94,7 +94,7 @@ function addTableElement(reportArray, z1, rowNum, header, body, markers) {
 		cell1.innerHTML = reportArray[1]
 	}
 	else {
-		cell1.innerHTML = '<div class = "dropdown"><button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Status</button><div class="dropdown-menu" aria-labelledby="dropdownMenuButton"><a class="dropdown-item" href="#">In Progress</a><a class="dropdown-item" href="#" id ="action-1">Almost Done</a><a class="dropdown-item" href="#">Completed</a></div></div>'
+		cell1.innerHTML ='<select style="width:100%;" class="custom-select" id="statusDrop"><option selected disabled value="all">Status</i></option><option  value="1">Submitted</option><option  value="2">Pending Action</option><option  value="3">In Progress</option><option = value="3">Resolved</option></select>' 
 	}
 	cell2.innerHTML = reportArray[2];
 	cell3.innerHTML = reportArray[3];
