@@ -19,6 +19,15 @@ async function readAllReports(callbackFunction) {
 	return (snapshot.val());
 }
 
+function formatTimeStamp(origStamp){
+	var finalString = "";
+	leftSide = origStamp.substring(0,10);
+	rightSide = origStamp.substring(11,19);
+	nrightSide = rightSide.replace(/-/g,":");
+	finalString = leftSide + "</br >" +  nrightSide;
+	return finalString;
+}
+
 //callback function example
 function callback1(reportsObject) {
 	//var keyArray[] = [, 'asdfasdfasdf']; //this array will hold the keys for reportsObject (dictionary data type)
@@ -38,7 +47,12 @@ function callback1(reportsObject) {
 	for (i = 0; i < keyArrayLength; i = i + 1) {
 		var reportStatus = reportsObject[keyArray[i]]['status'];
 		//var reportStatus = "In Progress";
-		var reportDate = reportsObject[keyArray[i]]['timeStamp'];
+		var reportDate = formatTimeStamp(reportsObject[keyArray[i]]['timeStamp']);
+		//var sreportDate = 
+		//var nreportDate = reportDate.replace(/-/g,":");
+		//document.write(nreportDate);
+
+
 		//var reportDate = "test";
 		//var reportIssue = reportsObject[keyArray[i]]['type'];
 		var PotholeConfidense = reportsObject[keyArray[i]]['confidense'];
