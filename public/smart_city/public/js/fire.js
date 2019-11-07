@@ -26,8 +26,8 @@ function formatTimeStamp(origStamp){
 	leftSide = origStamp.substring(0,10);
 	rightSide = origStamp.substring(11,19);
 	nrightSide = rightSide.replace(/-/g,":");
-	finalString = leftSide + "</br >" +  nrightSide;
-	return finalString;
+	//finalString = leftSide + "</br >" +  nrightSide;
+	return [leftSide, nrightSide];
 }
 
 //callback function example
@@ -46,13 +46,15 @@ function callback1(reportsObject) {
 
 	tableObj.setAttribute('id', 'mainTable');
 	tableObj.setAttribute('class', 'table  table-hover table-bordered');
-	var header_array = ['Index', 'Status', 'Time Stamp', 'Confidense', 'Image', 'Description'];
+	var header_array = ['Index', 'Status', 'Date','Time', 'Confidense', 'Image', 'Description'];
 	var markers = marker_creator(reportsObject, keyArray, keyArrayLength);
 	addTableElement(header_array, tableObj, 0, header, body);
 	for (i = 0; i < keyArrayLength; i = i + 1) {
 		var reportStatus = reportsObject[keyArray[i]]['status'];
 		//var reportStatus = "In Progress";
-		var reportDate = formatTimeStamp(reportsObject[keyArray[i]]['timeStamp']);
+		var timeStamp = formatTimeStamp(reportsObject[keyArray[i]]['timeStamp']);
+		var reportDate = timeStamp[0];
+		var reportTime = timeStamp[1];
 		//var sreportDate = 
 		//var nreportDate = reportDate.replace(/-/g,":");
 		//document.write(nreportDate);
@@ -69,7 +71,7 @@ function callback1(reportsObject) {
 		//var reportDescription = reportsObject[keyArray[i]]['description'];
 		var reportDescription = "test";
 		var k = keyArray[i]
-		var reportArray = [i + 1, reportStatus, reportDate, PotholeConfidense, reportPicture, reportDescription, k, pothole]; //this array will hold the order for the report list row
+		var reportArray = [i + 1, reportStatus, reportDate, reportTime, PotholeConfidense, reportPicture, reportDescription, k, pothole]; //this array will hold the order for the report list row
 
 		addTableElement(reportArray, tableObj, i + 1, header, body, markers);
 	}
@@ -93,14 +95,15 @@ function addTableElement(reportArray, z1, rowNum, header, body, markers) {
 	var cell1 = row.insertCell(1);
 	var cell2 = row.insertCell(2);
 	var cell3 = row.insertCell(3);
-	var cell6 = row.insertCell(4);
+	var cell4 = row.insertCell(4);
+	var cell5 = row.insertCell(5);
 	//var cell7 = row.insertCell(5);
 	cell0.setAttribute("width", "3%");
 	cell1.setAttribute("width", "8%");
 	cell2.setAttribute("width", "12%");
 	cell3.setAttribute("width", "10%");
-
-	cell6.setAttribute("width", "15%");
+	cell4.setAttribute("width",  "8%");
+	cell5.setAttribute("width", "15%");
 	//cell7.setAttribute("width", "25%");
 
 	cell0.innerHTML = reportArray[0];
@@ -112,32 +115,32 @@ function addTableElement(reportArray, z1, rowNum, header, body, markers) {
 	}
 	cell2.innerHTML = reportArray[2];
 	cell3.innerHTML = reportArray[3];
-
+	cell4.innerHTML = reportArray[4];
 
 
 	//var img = document.createElement("IMG");
 	
 	if (rowNum == 0) {
-		cell6.innerHTML = "Image";
+		cell5.innerHTML = "Image";
 	}
 	else {
-		if (reportArray[4] == 'no image') {
-			cell6.innerHTML = "no image";
+		if (reportArray[5] == 'no image') {
+			cell5.innerHTML = "no image";
 		}
 		else {
 			
 			//set rectangle
-			var pothole = reportArray[7];
+			var pothole = reportArray[8];
 			
 
-			var canvas = create_canvas(reportArray[4], pothole, "200", "200");
+			var canvas = create_canvas(reportArray[5], pothole, "200", "200");
 			//tableDiv = create_canvas_div("50","50", canvas);
-			cell6.appendChild(canvas);
+			cell5.appendChild(canvas);
 			
 			var markerIndex = rowNum - 1;
 			var marker = markers[markerIndex];
 			//cell6.innerHTML = "<img id='myImg' alt='Snow'  src = \"data:image/jpg;base64," +reportArray[4] + "\"width = \"100\" height = \"80\">";
-			var confidense = Math.round(parseFloat(reportArray[3]) * 100) / 100;
+			var confidense = Math.round(parseFloat(reportArray[4]) * 100) / 100;
 			
 
 			var markerDiv = create_marker_infoWindow(create_canvas(reportArray[4], pothole, "100%", "100%"), confidense);
