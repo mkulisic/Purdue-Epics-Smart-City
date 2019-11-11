@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <head>
-    <title>Smart City</title>
+    <title>Smart City dasdf</title>
 	<!--<script src = "jquery.js"></script>-->
     <!-- <div style="background-color:#D4AF37;"class="jumbotron jumbotron-fluid"> -->
 	<title></title>
@@ -147,9 +147,10 @@ td{
               </div>
               
                 <div class="col-sm-3">
-                    <select class="custom-select" id="statusDrop">
+                    <select class="custom-select" id="statusDrop" onchange="filterData()">
                         <option selected disabled value="all">Status</i>
                         </option>
+                        <option value="all">All</option>s
                         <option  value="1">Submitted</option>
                         <option  value="2">Pending Action</option>
                         <option  value="3">In Progress</option>
@@ -157,7 +158,7 @@ td{
                     </select>
                 </div>
                 <div class="col-sm-2">
-                    <select id="street_select" class="custom-select">
+                    <select id="street_select" class="custom-select" onchange="filterData()">
 
                         <option selected disabled value="all">Street</i>
                         </option>
@@ -167,7 +168,7 @@ td{
                 </div>
                 
                 <div class="col-sm-2">
-                    <select id="date_select" class="custom-select">
+                    <select id="date_select" class="custom-select" onchange="filterData()">
                         <option disabled selected value="all">From Date </i>
                         </option>
                         <option value="all">All Dates</option>
@@ -175,9 +176,10 @@ td{
 
                 </div>
                 <div class="col-sm-3">
-                    <select id="up_to_date" class="custom-select">
+                    <select id="up_to_date" class="custom-select" onchange="filterData()">
                         <option disabled selected value="all">To Date: </i>
                         </option>
+                        <option value="all">All Dates</option>
                     </select>
                 </div>
             </div>
@@ -257,6 +259,8 @@ td{
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
   firebase.analytics();
+  var markers;
+  var potholeData = new Array();
 </script>
 
 
@@ -264,95 +268,12 @@ td{
     
         <h2 style="color:#34738f;" ><center>Reports</center></h2>
     
-	
-<script src="./smart_city/public/js/fire.js"></script>
+<script src="./smart_city/public/js/filterIntegration.js"></script>
+<script src="./smart_city/public/js/fire_test.js"></script>
+
+
 <!--This is the filter script-->
-<script>
-//this function looks for the filter that the user selects
-function absorbInput()  {
-//window.alert("absorbed input");
-var c0 = document.getElementById("status").value;
-var c1 = document.getElementById("date_select").value;
-var c2 = document.getElementById("issue_select").value;
-var inputArray = [c0,c1,c2];
-//window.alert(inputArray);
-//var statusResult = c0.options[c0.selectedIndex].text;
-if ((c0 == "all") && (c1 == "all") && (c2 == "all")) //no filter was chosen at all
-{
-	//window.prompt("No filter chosen");
-	filteringAlgorithm("all","-1");
-}
-else if ((c0 != "all") && (c1 == "all") && (c2 == "all")) //the status filter is active
-{
-	//window.prompt("filter1 chosen");
-	filteringAlgorithm(c0,0);
-}
-else if ((c0 == "all") && (c1 != "all") && (c2 == "all")) //date filter is now active
-{
-	//window.prompt("filter2 chosen");
-	filteringAlgorithm(c1,1);
-}
-else if ((c0 == "all") && (c1 == "all") && (c2 != "all")) //issue filter is now active
-{
-	//window.prompt("filter3 chosen");
-	filteringAlgorithm(c2,2);
-}
-else
-{
-	window.prompt("Please use one filter at a time.");
-}
-}
-//this function actually filters the table and hides the rows that do no match the filter criteria
-function filteringAlgorithm(inVar, columnNum) {
-//window.prompt("Got to filtering");
-  // Declare variables 
-  var input, filter, table, tr, td, i;
-  //input = document.getElementById("myInput");
-  input = inVar;
-  //window.alert(input);
-  //filter = input.value.toUpperCase();
-  
-  //window.alert("can it go to uppercase");
-  table = document.getElementById("ourTable");
-  //window.alert(table);
-  tbody = table.getElementsByTagName("tbody");
-  tr = table.getElementsByTagName("tr");
-  
-//document.getElementById("ourTable").rows[0].cells[1].innerHTML; <= retrieves text from inside a specific row and column
-//document.getElementById("ourTable").rows[i].cells[columnNum].innerHTML;
-  // Loop through all table rows, and hide those who don't match the search query'
-  //window.alert("does tbody exist?");
-  //window.alert(table.rows.length);
-  for (i = 0; i< table.rows.length; i++) {
-	if (table.rows[i].cells[columnNum].innerHTML != inVar && (columnNum >= 0)) { //not matching
-	  tr[i].style.display = "none";
-	}
-	else if ((table.rows[i].cells[columnNum].innerHTML == inVar) | (columnNum == "-1")) { //finds match
-	    for (i2 = 0; i2 < table.rows.length; i2++) {  //go through table to reappear
-			if (table.rows[i2].cells[columnNum].innerHTML == inVar) {
-			tr[i2].style.display = "";
-			}
-		}
-	}
-  }
-}
-function dateFilteringAlgorithm(input,columnNumber)
-{
-var table = document.getElementById("ourTable");
-tr = table.getElementsByTagName("tr");
-}
-<!-- //restores table to original state if no filters are applied -->
-<!-- function restoreTable() { -->
-  <!-- window.prompt("Restoring table"); -->
-  <!-- var table = document.getElementById("ourTable"); -->
-  <!-- tr = table.getElementsByTagName("tr"); -->
-	<!-- for (i3 = 0; i3 < table.rows.length; i3++) {  //go through table to reappear -->
-		<!-- if (table.rows[i3].style == "none") { -->
-		<!-- tr[i3].style.display = ""; -->
-		<!-- } -->
-	<!-- } -->
-<!-- } -->
-</script>
+
     </section>
 
   <div id="myModal" class="modal">
