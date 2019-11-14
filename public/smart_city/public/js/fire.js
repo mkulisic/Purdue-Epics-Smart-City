@@ -164,7 +164,7 @@ function addTableElement(reportMap, z1, rowNum, header, body, markers) {
 			var confidense = Math.round(parseFloat(reportMap["confidense"]) * 100) / 100;
 			
 
-			var markerDiv = create_marker_infoWindow(markerCanvas, confidense);
+			var markerDiv = create_marker_infoWindow(markerCanvas, confidense, reportMap["Date"]);
 			marker.infoWindowContent = markerDiv;
 			(function (marker, i) {
 			google.maps.event.addListener(marker, 'click', function () {
@@ -180,7 +180,7 @@ function addTableElement(reportMap, z1, rowNum, header, body, markers) {
 }
 input = "Pothole";
 
-function create_marker_infoWindow(canvasDiv, confidense){
+function create_marker_infoWindow(canvasDiv, confidense, reportDate){
 	var markerDiv = document.createElement("div");
 	markerDiv.setAttribute("width", "100%");
 	markerDiv.setAttribute("height", "90%");
@@ -188,14 +188,25 @@ function create_marker_infoWindow(canvasDiv, confidense){
 	var confidenseDiv = document.createElement("div");
 	confidenseDiv.setAttribute("width", "100%");
 	confidenseDiv.setAttribute("height", "10%");
+	var dateDiv = document.createElement("div");
 	var confidenseLabel = document.createElement("b");
 	confidenseLabel.innerHTML = "Confidense: ";
+	//markerLabel.("reportDate")
 	var confidenseText = document.createElement("t");
 	confidenseText.innerHTML = confidense;
+	var dateLabel = document.createElement("b");
+	dateLabel.innerHTML = "Date: ";
+	var dateText = document.createElement("t");
+	dateText.innerHTML = reportDate;
+
+	dateDiv.appendChild(dateLabel);
+	dateDiv.appendChild(dateText);
 	confidenseDiv.appendChild(confidenseLabel);
 	confidenseDiv.appendChild(confidenseText);
+	markerDiv.appendChild(dateDiv);
 	markerDiv.appendChild(confidenseDiv);
 	//canvas
+
 	markerDiv.appendChild(canvasDiv);
 	return markerDiv
 

@@ -122,6 +122,12 @@ td{
             
 #myBtn:hover {
   background-color: #555;
+
+
+}
+#Purdue_logo{
+  width: auto;
+  height: 100px;
 }
 </style>
 </head>
@@ -134,19 +140,19 @@ td{
     <div class="jumbotron jumbotron-fluid" style = "background-color:#CFB53B">
         <div class="row">
             <div class="col-sm-2">
-                <p>Purdue EPICS</p>
+                
             </div>
             <div class="col-sm-8">
-                <h1 class="h1">West Lafayette <i class="fa fa-map" aria-hidden="true"></i> Smart City</h1>
+                <h1 class="h1"> Purdue <img id="Purdue_logo" src="smart_city/public/assets/purdue_epics_image.JPG"> Smart City</h1> </div>
             </div>
             
-            </div>
+            
             <div class="container">
             <div class="row" width=100%>
               <div class="col-sm-1">
               </div>
-              
-                <div class="col-sm-3">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-2">
                     <select class="custom-select" id="statusDrop" onchange="filterData()">
                         <option selected disabled value="all">Status</i>
                         </option>
@@ -175,7 +181,7 @@ td{
                     </select>
 
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-2">
                     <select id="up_to_date" class="custom-select" onchange="filterData()">
                         <option disabled selected value="all">To Date: </i>
                         </option>
@@ -269,7 +275,7 @@ td{
         <h2 style="color:#34738f;" ><center>Reports</center></h2>
     
 <script src="./smart_city/public/js/filterIntegration.js"></script>
-<script src="./smart_city/public/js/fire_test.js"></script>
+<script src="./smart_city/public/js/fire.js"></script>
 
 
 <!--This is the filter script-->
