@@ -1,0 +1,10 @@
+Instructions for Git
+
+if you add any new files do:
+git add *
+
+if you only change existing files:
+git commit -m "Your Message (Little description of what you did)"
+
+Once the code works:
+git push

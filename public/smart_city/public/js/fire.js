@@ -159,7 +159,7 @@ function addTableElement(reportArray, z1, rowNum, header, body, markers) {
 }
 input = "Pothole";
 
-function create_marker_infoWindow(canvasDiv, confidense){
+function create_marker_infoWindow(canvasDiv, confidense, reportDate){
 	var markerDiv = document.createElement("div");
 	markerDiv.setAttribute("width", "100%");
 	markerDiv.setAttribute("height", "90%");
@@ -169,13 +169,21 @@ function create_marker_infoWindow(canvasDiv, confidense){
 	confidenseDiv.setAttribute("height", "10%");
 	var confidenseLabel = document.createElement("b");
 	confidenseLabel.innerHTML = "Confidense: ";
+	//markerLabel.("reportDate")
 	var confidenseText = document.createElement("t");
 	confidenseText.innerHTML = confidense;
+	var dateLabel = document.createElement("d");
+	dateLabel.innerHTML = "Date: ";
+	var dateText = document.createElement("e");
+	dateText.innerHTML = reportDate;
+
 	confidenseDiv.appendChild(confidenseLabel);
 	confidenseDiv.appendChild(confidenseText);
 	markerDiv.appendChild(confidenseDiv);
 	//canvas
 	markerDiv.appendChild(canvasDiv);
+	markerDiv.appendChild(dateLabel);
+	markerDiv.appendChild(dateText);
 	return markerDiv
 
 
